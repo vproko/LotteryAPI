@@ -25,7 +25,7 @@ To be able to fill out a ticket, the user must be registered first.
 3) Then open "Package Manager Console", you can find it under "Tools > NuGet Package Manager > Package Manager Console",
 4) When the "Package Manager Console" window opens, in "Default Project" dropdown menu select "Lottery.DataAccess"
 5) In the "Package Manager Console" write "Add-Migration MigrationsName", you can choose any name you want instead of "MigrationsName".
-6) When the migration fnishes building, in the "Package Manager Console" window write "Update-Database".
+6) When the migration finishes building, in the "Package Manager Console" window write "Update-Database".
 7) When it finishes, you can run the api, by clicking on "IIS Express" or by clicking on F5 function key. When it finishes loading, in the browser window, you gonna see a message "Lottery API is active.".
 
-After this you are ready to run the lottery application, either LotteryReact or LotteryAngular.
+After this you are ready to run the lottery application, either react-lottery, react-redux-lottery or vue-lottery.
