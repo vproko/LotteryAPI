@@ -133,6 +133,8 @@ namespace Lottery.Services.Services
                 {
                     await CreateWinnerAsync(numberOfHits, ticket, matchings, lastDraw);
                 }
+
+                await RemoveDoubleWinnersAsync(lastDraw.SessionId);
             }
         }
 
@@ -151,6 +153,23 @@ namespace Lottery.Services.Services
             };
 
             await Task.Run(() => _winnerRepository.Add(_mapper.Map<Winner>(winner)));
+        }
+
+        private async Task RemoveDoubleWinnersAsync(Guid lastSessionId)
+        {
+            IEnumerable<WinnerDTO> winners = await Task.Run(() => _mapper.Map<IEnumerable<WinnerDTO>>(_winnerRepository.GetAll().Where(t => t.SessionId == lastSessionId)));
+            foreach (var winner in winners)
+            {
+                var current = winner;
+                var matches = winners.Where(x => x.UserId == current.UserId && x.TicketId != current.TicketId && x.NumberOfHits <= current.NumberOfHits);
+                if (matches != null)
+                {
+                    foreach (var match in matches)
+                    {
+                        await Task.Run(() => _winnerRepository.Delete(match.WinnerId));
+                    }
+                }
+            }
         }
     }
 }
